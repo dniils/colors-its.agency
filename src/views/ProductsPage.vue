@@ -6,13 +6,12 @@ import AppHeader from "../components/AppHeader.vue";
   <div>
     <AppHeader />
     <main class="main">
-      <h1>Home Page</h1>
+      <h1>Products:</h1>
+      <ul>
+        <li>
+          <router-link to="/products/paints"> Paints </router-link>
+        </li>
+      </ul>
     </main>
   </div>
 </template>
-
-<style lang="scss">
-.main {
-  padding: 20px 24px;
-}
-</style>
