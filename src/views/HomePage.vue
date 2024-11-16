@@ -6,7 +6,7 @@ import AppHeader from "../components/AppHeader.vue";
   <div>
     <AppHeader />
     <main class="main">
-      <h1>Home Page</h1>
+      <h1 class="title">Home Page</h1>
     </main>
   </div>
 </template>

@@ -15,9 +15,3 @@ import { paints } from "../data";
     </main>
   </div>
 </template>
-
-<style scoped lang="scss">
-.title {
-  margin: 48px 0;
-}
-</style>
