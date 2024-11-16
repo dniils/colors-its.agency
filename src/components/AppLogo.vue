@@ -11,7 +11,6 @@
   line-height: 1;
 
   a {
-    color: #000;
     text-decoration: none;
     font-size: 22px;
     font-weight: 500;
@@ -25,7 +24,7 @@
     display: block;
     width: 0.5rem;
     height: 0.5rem;
-    background-color: #000;
+    background-color: var(--black-100);
     border-radius: 50%;
   }
 }

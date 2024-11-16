@@ -17,6 +17,11 @@ function toggleMenu(): void {
 
 <template>
   <header class="header">
+    <div
+      class="overlay"
+      :class="{ overlay_active: menuIsOpen }"
+      @click="toggleMenu"
+    ></div>
     <BurgerButton
       class="header__burger-btn"
       :class="{ 'burger-btn_active': menuIsOpen }"
@@ -49,6 +54,25 @@ function toggleMenu(): void {
     height: 1px;
     background-color: var(--gray-200);
     margin: 0 20px;
+  }
+
+  .overlay {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-color: #00000096;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0s linear 0.5s;
+    z-index: 3;
+
+    &_active {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.2s ease-in-out;
+    }
   }
 
   &__menu {

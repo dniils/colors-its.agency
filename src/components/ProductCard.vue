@@ -34,6 +34,7 @@ defineProps<{
   background-color: var(--white);
   max-width: 156px;
   height: 100%;
+  color: var(--black-100);
 
   @media screen and (min-width: 1200px) {
     max-width: 278px;

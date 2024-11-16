@@ -13,7 +13,7 @@
   justify-content: space-between;
   width: 24px;
   height: 18px;
-  background-color: var(--white);
+  background-color: transparent;
   border: none;
   padding: 0.1rem 0;
   transition: transform 0.15s ease-in;

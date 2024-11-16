@@ -15,6 +15,7 @@
   font-size: 1rem;
   line-height: 1;
   padding: 4px 12px;
+  color: var(--black-100);
   background-color: var(--gray-200);
   border-radius: 4px;
   border: 0;
