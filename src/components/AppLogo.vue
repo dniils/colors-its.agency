@@ -13,7 +13,7 @@
   a {
     color: #000;
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 22px;
     font-weight: 500;
   }
 

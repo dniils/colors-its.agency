@@ -1,4 +1,4 @@
-@import "variables";
+@import "variables", "typography";
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -15,6 +15,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
 }
 
 a {

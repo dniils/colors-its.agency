@@ -38,9 +38,21 @@ function toggleMenu(): void {
   justify-content: space-between;
   align-items: center;
   padding: 20px 24px;
+  z-index: 2;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--gray-200);
+    margin: 0 20px;
+  }
 
   &__menu {
-    position: absolute;
+    position: fixed;
     top: 0;
     height: 100vh;
     display: flex;
@@ -48,11 +60,12 @@ function toggleMenu(): void {
     align-items: flex-start;
     padding: 10rem 1.5rem 1.5rem;
     margin-left: -24px;
-    background-color: #ffffffcc;
+    background-color: var(--white);
     backdrop-filter: blur(2px);
     box-shadow: 0 0 1px 0 rgba($color: #000000, $alpha: 0.1);
     transform: translateX(-200%);
     transition: transform 0.15s ease-in;
+    z-index: 3;
 
     &_active {
       transform: translateX(0%);
