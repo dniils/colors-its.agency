@@ -24,6 +24,9 @@
 
 <style lang="scss">
 .menu {
+  background-color: var(--white);
+  overflow: auto;
+
   &__list {
     display: flex;
     flex-direction: column;

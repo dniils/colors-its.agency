@@ -3,15 +3,22 @@ import { ref } from "vue";
 import AppLogo from "./AppLogo.vue";
 import AppMenu from "./AppMenu.vue";
 import BurgerButton from "./BurgerButton.vue";
+import ModalCart from "./ModalCart.vue";
 
 const menuIsOpen = ref(false);
+const cartIsOpen = ref(false);
 
 function toggleMenu(): void {
-  if (!menuIsOpen.value) {
-    menuIsOpen.value = true;
-  } else {
-    menuIsOpen.value = false;
-  }
+  menuIsOpen.value = !menuIsOpen.value;
+}
+
+function toggleCart(): void {
+  cartIsOpen.value = !cartIsOpen.value;
+}
+
+function handleOverlayClick(): void {
+  if (cartIsOpen) cartIsOpen.value = false;
+  if (menuIsOpen) menuIsOpen.value = false;
 }
 </script>
 
@@ -19,8 +26,8 @@ function toggleMenu(): void {
   <header class="header">
     <div
       class="overlay"
-      :class="{ overlay_active: menuIsOpen }"
-      @click="toggleMenu"
+      :class="{ overlay_active: menuIsOpen || cartIsOpen }"
+      @click="handleOverlayClick"
     ></div>
     <BurgerButton
       class="header__burger-btn"
@@ -32,7 +39,13 @@ function toggleMenu(): void {
       class="header__menu"
       :class="{ header__menu_active: menuIsOpen }"
     />
-    <div>Cart</div>
+
+    <div @click="toggleCart">Cart</div>
+    <ModalCart
+      class="header__cart"
+      :class="{ header__cart_active: cartIsOpen }"
+      @close-cart="toggleCart"
+    />
   </header>
 </template>
 
@@ -84,10 +97,7 @@ function toggleMenu(): void {
     align-items: flex-start;
     padding: 10rem 1.5rem 1.5rem;
     margin-left: -24px;
-    background-color: var(--white);
-    backdrop-filter: blur(2px);
-    box-shadow: 0 0 1px 0 rgba($color: #000000, $alpha: 0.1);
-    transform: translateX(-200%);
+    transform: translateX(-100%);
     transition: transform 0.15s ease-in;
     z-index: 3;
 
@@ -108,11 +118,25 @@ function toggleMenu(): void {
   }
 
   &__burger-btn {
-    display: flex;
-    z-index: 99;
+    z-index: 4;
 
     @media screen and (min-width: 992px) {
       display: none;
+    }
+  }
+
+  &__cart {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 4;
+
+    &_active {
+      transition: transform 0.3s ease-in-out;
+      transform: translateX(0);
     }
   }
 }
