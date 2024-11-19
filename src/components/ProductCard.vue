@@ -10,7 +10,7 @@ defineProps<{
 <template>
   <div class="product">
     <div class="product__image-wrapper">
-      <img :src="product.imgSrc" alt="paint" class="product__image" />
+      <img :src="product.photo_url" alt="paint" class="product__image" />
     </div>
     <div class="product__content">
       <div class="product__name">
