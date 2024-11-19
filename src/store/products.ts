@@ -7,8 +7,12 @@ export const useProductsStore = defineStore("products", () => {
   const products = ref<Product[]>([]);
   const offset = ref(0);
   const productsPerPage = 10;
+  const loading = ref(false);
 
   async function getProducts(): Promise<void> {
+    if (loading.value) return;
+    loading.value = true;
+
     try {
       const data = await fetchProducts(
         offset.value.toString(),
@@ -22,6 +26,8 @@ export const useProductsStore = defineStore("products", () => {
       }
     } catch (error) {
       console.log("Error:", error);
+    } finally {
+      loading.value = false;
     }
   }
 

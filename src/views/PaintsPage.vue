@@ -3,7 +3,7 @@ import AppHeader from "../components/AppHeader.vue";
 import ProductList from "../components/ProductList.vue";
 import BreadCrumbs from "../components/BreadCrumbs.vue";
 import ModalBottomSheet from "../components/ModalBottomSheet.vue";
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, onBeforeUnmount, ref } from "vue";
 import { useProductsStore } from "../store/products";
 
 const isBottomModalOpen = ref(false);
@@ -13,8 +13,19 @@ function toggleBottomModal(): void {
   isBottomModalOpen.value = !isBottomModalOpen.value;
 }
 
+async function onScroll(): Promise<void> {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+    await store.getProducts();
+  }
+}
+
 onBeforeMount(() => {
-  store.getProducts();
+  if (!store.products.length) store.getProducts();
+  window.addEventListener("scroll", onScroll);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", onScroll);
 });
 </script>
 
