@@ -4,7 +4,9 @@ import AppLogo from "./AppLogo.vue";
 import AppMenu from "./AppMenu.vue";
 import BurgerButton from "./BurgerButton.vue";
 import ModalCart from "./ModalCart.vue";
+import { useCartStore } from "../store/cart";
 
+const cartStore = useCartStore();
 const menuIsOpen = ref(false);
 const cartIsOpen = ref(false);
 
@@ -40,7 +42,13 @@ function handleOverlayClick(): void {
       :class="{ header__menu_active: menuIsOpen }"
     />
 
-    <div @click="toggleCart">Cart</div>
+    <div
+      @click="toggleCart"
+      class="header__cart-icon"
+      :class="{ 'header__cart-icon_has-items': cartStore.cartCount > 0 }"
+    >
+      {{ cartStore.cartCount }}
+    </div>
     <ModalCart
       class="header__cart"
       :class="{ header__cart_active: cartIsOpen }"
@@ -122,6 +130,23 @@ function handleOverlayClick(): void {
 
     @media screen and (min-width: 992px) {
       display: none;
+    }
+  }
+
+  &__cart-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    width: 24px;
+    height: 24px;
+    background-color: var(--gray-100);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in;
+
+    &_has-items {
+      background-color: var(--green-100);
     }
   }
 

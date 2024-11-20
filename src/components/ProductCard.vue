@@ -1,10 +1,23 @@
 <script setup lang="ts">
 import { Product } from "../types/Product";
 import AppButton from "./AppButton.vue";
+import { useCartStore } from "../store/cart";
+
+const cartStore = useCartStore();
 
 defineProps<{
   product: Product;
 }>();
+
+function addItemToCart(product: Product) {
+  cartStore.addToCart({
+    id: product.id,
+    name: product.name,
+    imageSource: product.photo_url,
+    price: product.price,
+    quantity: 1,
+  });
+}
 </script>
 
 <template>
@@ -18,7 +31,9 @@ defineProps<{
       </div>
       <div class="product__price">{{ product.price }} ₽</div>
     </div>
-    <AppButton class="product__btn-add">+</AppButton>
+    <AppButton class="product__btn-add" @click="addItemToCart(product)"
+      >+</AppButton
+    >
   </div>
 </template>
 

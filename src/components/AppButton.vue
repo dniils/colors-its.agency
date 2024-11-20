@@ -21,9 +21,13 @@
   border: 0;
   transition: all 0.15s ease-in;
 
-  &:hover {
+  &:enabled:hover {
     cursor: pointer;
     background-color: var(--green-100);
+  }
+
+  &:disabled {
+    color: var(--gray-100);
   }
 }
 </style>

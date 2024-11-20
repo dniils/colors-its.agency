@@ -1,26 +1,46 @@
 <script setup lang="ts">
+import { CartItem } from "../types/Cart";
 import AppButton from "./AppButton.vue";
+import { useCartStore } from "../store/cart";
+
+const cartStore = useCartStore();
+
+defineProps<{
+  item: CartItem;
+}>();
+
+function removeItem(id: number) {
+  cartStore.removeItem(id);
+}
+
+function decreaseQuantity(id: number): void {
+  cartStore.decreaseQuantity(id);
+}
+function increaseQuantity(id: number): void {
+  cartStore.increaseQuantity(id);
+}
 </script>
 
 <template>
   <div class="cart-item">
-    <img
-      class="cart-item__image"
-      src="https://placehold.co/600x400"
-      alt="image"
-    />
+    <img class="cart-item__image" :src="item.imageSource" alt="image" />
     <div class="cart-item__content">
-      <div class="cart-item__name"></div>
-      <div class="cart-item__price"></div>
+      <div>{{ item.name }}</div>
+      <div class="cart-item__price">{{ item.price }}</div>
     </div>
     <div class="cart-item__buttons">
-      <AppButton class="cart-item__btn-decrease">–</AppButton>
-      <div class="cart-item__amount">1</div>
-      <AppButton class="cart-item__btn-increse">+</AppButton>
-      <AppButton class="cart-item__btn-delete">x</AppButton>
+      <AppButton
+        @click="decreaseQuantity(item.id)"
+        :disabled="item.quantity === 1"
+        >–</AppButton
+      >
+      <div>{{ item.quantity }}</div>
+      <AppButton @click="increaseQuantity(item.id)">+</AppButton>
+      <AppButton @click="removeItem(item.id)">x</AppButton>
     </div>
   </div>
 </template>
+
 <style scoped lang="scss">
 .cart-item {
   position: relative;
@@ -29,7 +49,6 @@ import AppButton from "./AppButton.vue";
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-height: 109px;
 
   &::before {
     position: absolute;
@@ -47,6 +66,14 @@ import AppButton from "./AppButton.vue";
     height: 96px;
     object-fit: contain;
     object-position: left;
+  }
+
+  &__content {
+    padding: 0 12px;
+  }
+
+  &__price {
+    font-weight: 600;
   }
 
   &__buttons {

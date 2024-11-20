@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import CartItem from "./CartItem.vue";
 import AppButton from "./AppButton.vue";
+import { useCartStore } from "../store/cart";
 
+const store = useCartStore();
 const emit = defineEmits<{
   closeCart: [];
 }>();
 
 function closeCart() {
   emit("closeCart");
+}
+
+function clearCart(): void {
+  store.clearCart();
 }
 </script>
 
@@ -16,24 +22,14 @@ function closeCart() {
     <div>
       <button class="cart__btn-close" @click="closeCart">X</button>
       <h1 class="title cart__title">Корзина</h1>
+      <div class="cart__info">
+        <!-- TODO: товар-[]/-а/-ов -->
+        <div class="cart__total-count">{{ store.cartCount }} товара</div>
+        <div class="cart__clear-list" @click="clearCart">Очистить список</div>
+      </div>
       <ul class="cart__list">
-        <li>
-          <CartItem />
-        </li>
-        <li>
-          <CartItem />
-        </li>
-        <li>
-          <CartItem />
-        </li>
-        <li>
-          <CartItem />
-        </li>
-        <li>
-          <CartItem />
-        </li>
-        <li>
-          <CartItem />
+        <li v-for="item in store.cartItems" :key="item.id">
+          <CartItem :item="item" />
         </li>
       </ul>
     </div>
@@ -41,7 +37,7 @@ function closeCart() {
     <div class="cart__checkout">
       <div>
         <div>Итого</div>
-        <div class="cart__price-total">1000₽</div>
+        <div class="cart__price-total">{{ store.total.toFixed(2) }} ₽</div>
       </div>
       <AppButton>оформить заказ</AppButton>
     </div>
@@ -92,6 +88,21 @@ function closeCart() {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  &__clear-list {
+    color: var(--gray-100);
+
+    &:hover {
+      cursor: pointer;
+      color: var(--black);
+    }
   }
 }
 </style>
