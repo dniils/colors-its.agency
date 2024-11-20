@@ -5,6 +5,9 @@ import BreadCrumbs from "../components/BreadCrumbs.vue";
 import ModalBottomSheet from "../components/ModalBottomSheet.vue";
 import { onBeforeMount, onBeforeUnmount, ref } from "vue";
 import { useProductsStore } from "../store/products";
+import { VueperSlides, VueperSlide } from "vueperslides";
+import "vueperslides/dist/vueperslides.css";
+import { slides } from "../slides/index.ts";
 
 const isBottomModalOpen = ref(false);
 const store = useProductsStore();
@@ -33,8 +36,27 @@ onBeforeUnmount(() => {
   <div>
     <AppHeader class="header" />
 
+    <div class="slider-wrapper">
+      <vueper-slides
+        class="no-shadow"
+        :dragging-distance="70"
+        prevent-y-scroll
+        autoplay
+        no-shadow
+        fixed-height="560px"
+      >
+        <vueper-slide
+          v-for="(slide, i) in slides"
+          :key="i"
+          :title="slide.title"
+          :content="slide.content"
+          :image="slide.image"
+        />
+      </vueper-slides>
+      <BreadCrumbs class="breadcrumbs" />
+    </div>
+
     <main class="main">
-      <BreadCrumbs />
       <h1 class="title">Краски</h1>
       <div @click="toggleBottomModal">Фильтры</div>
       <ProductList
@@ -55,5 +77,37 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 .product-list {
   margin-top: 24px;
+}
+
+h1.title {
+  margin-top: 28px;
+
+  @media screen and (min-width: 992px) {
+    display: none;
+  }
+}
+
+.breadcrumbs {
+  margin-top: 20px;
+  padding: 0 24px;
+}
+
+.vueperslides {
+  display: none;
+}
+
+@media screen and (min-width: 992px) {
+  .vueperslides {
+    display: block;
+  }
+  .slider-wrapper {
+    position: relative;
+  }
+  .breadcrumbs {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
 }
 </style>
