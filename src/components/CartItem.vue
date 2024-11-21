@@ -9,14 +9,14 @@ defineProps<{
   item: CartItem;
 }>();
 
-function removeItem(id: number) {
+function removeItem(id: string) {
   cartStore.removeItem(id);
 }
 
-function decreaseQuantity(id: number): void {
+function decreaseQuantity(id: string): void {
   cartStore.decreaseQuantity(id);
 }
-function increaseQuantity(id: number): void {
+function increaseQuantity(id: string): void {
   cartStore.increaseQuantity(id);
 }
 </script>
@@ -26,7 +26,7 @@ function increaseQuantity(id: number): void {
     <img class="cart-item__image" :src="item.imageSource" alt="image" />
     <div class="cart-item__content">
       <div>{{ item.name }}</div>
-      <div class="cart-item__price">{{ item.price }}</div>
+      <div class="cart-item__price">{{ item.price }} ₽</div>
     </div>
     <div class="cart-item__buttons">
       <AppButton

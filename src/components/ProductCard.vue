@@ -13,7 +13,7 @@ function addItemToCart(product: Product) {
   cartStore.addToCart({
     id: product.id,
     name: product.name,
-    imageSource: product.photo_url,
+    imageSource: product.imgSrc,
     price: product.price,
     quantity: 1,
   });
@@ -23,7 +23,7 @@ function addItemToCart(product: Product) {
 <template>
   <div class="product">
     <div class="product__image-wrapper">
-      <img :src="product.photo_url" alt="paint" class="product__image" />
+      <img :src="product.imgSrc" alt="paint" class="product__image" />
     </div>
     <div class="product__content">
       <div class="product__name">

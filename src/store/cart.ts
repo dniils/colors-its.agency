@@ -17,16 +17,16 @@ export const useCartStore = defineStore("cart", () => {
     }
   }
 
-  function removeItem(itemId: number): void {
+  function removeItem(itemId: string): void {
     cartItems.value = cartItems.value.filter((item) => item.id !== itemId);
   }
 
-  function increaseQuantity(itemId: number): void {
+  function increaseQuantity(itemId: string): void {
     const item = cartItems.value.find((item) => item.id === itemId);
     if (item) item.quantity += 1;
   }
 
-  function decreaseQuantity(itemId: number): void {
+  function decreaseQuantity(itemId: string): void {
     const item = cartItems.value.find((item) => item.id === itemId);
     if (item && item.quantity > 1) item.quantity -= 1;
   }

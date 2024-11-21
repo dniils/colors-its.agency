@@ -5,24 +5,25 @@ import { fetchProducts } from "../api";
 
 export const useProductsStore = defineStore("products", () => {
   const products = ref<Product[]>([]);
-  const offset = ref(0);
+  const page = ref(1);
   const productsPerPage = 10;
   const loading = ref(false);
+  const hasMoreProducts = ref(true);
 
   async function getProducts(): Promise<void> {
-    if (loading.value) return;
+    if (loading.value || !hasMoreProducts.value) return;
     loading.value = true;
 
     try {
       const data = await fetchProducts(
-        offset.value.toString(),
+        page.value.toString(),
         productsPerPage.toString()
       );
-      if (data.products.length > 0) {
-        products.value.push(...data.products);
-        offset.value += productsPerPage;
+      if (data.length > 0) {
+        products.value.push(...data);
+        page.value += 1;
       } else {
-        console.log("No more products to load");
+        hasMoreProducts.value = false;
       }
     } catch (error) {
       console.log("Error:", error);
@@ -31,5 +32,5 @@ export const useProductsStore = defineStore("products", () => {
     }
   }
 
-  return { offset, productsPerPage, products, getProducts };
+  return { page, productsPerPage, products, getProducts };
 });

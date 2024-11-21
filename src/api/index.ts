@@ -1,11 +1,13 @@
-import { ProductsResponse } from "../types/Product";
+import { Product } from "../types/Product";
+
+const PROJECT_TOKEN = "67366c19aafa2ef222307c16";
 
 export async function fetchProducts(
-  offset: string,
+  page: string,
   limit: string
-): Promise<ProductsResponse> {
+): Promise<Product[]> {
   const response = await fetch(
-    `https://api.slingacademy.com/v1/sample-data/products?offset=${offset}&limit=${limit}`,
+    `https://${PROJECT_TOKEN}.mockapi.io/products?page=${page}&limit=${limit}`,
     {}
   );
 
@@ -13,6 +15,6 @@ export async function fetchProducts(
     throw new Error(`${response.status} ${response.statusText} `);
   }
 
-  const data: ProductsResponse = await response.json();
+  const data: Product[] = await response.json();
   return data;
 }

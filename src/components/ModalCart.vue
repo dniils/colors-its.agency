@@ -37,7 +37,7 @@ function clearCart(): void {
     <div class="cart__checkout">
       <div>
         <div>Итого</div>
-        <div class="cart__price-total">{{ store.total.toFixed(2) }} ₽</div>
+        <div class="cart__price-total">{{ store.total }} ₽</div>
       </div>
       <AppButton>оформить заказ</AppButton>
     </div>
