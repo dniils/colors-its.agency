@@ -3,14 +3,16 @@ import AppHeader from "../components/AppHeader.vue";
 import ProductList from "../components/ProductList.vue";
 import BreadCrumbs from "../components/BreadCrumbs.vue";
 import ModalBottomSheet from "../components/ModalBottomSheet.vue";
-import { onBeforeMount, onBeforeUnmount, ref } from "vue";
+import { onBeforeMount, onBeforeUnmount, ref, watch } from "vue";
 import { useProductsStore } from "../store/products";
 import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
 import { slides } from "../slides/index.ts";
+import ProductFilters from "../components/ProductFilters.vue";
 
 const isBottomModalOpen = ref(false);
 const store = useProductsStore();
+const filters = ref(store.filters);
 
 function toggleBottomModal(): void {
   isBottomModalOpen.value = !isBottomModalOpen.value;
@@ -18,12 +20,26 @@ function toggleBottomModal(): void {
 
 async function onScroll(): Promise<void> {
   if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-    await store.getProducts();
+    const params = store.getActiveFilters();
+    await store.getProducts(params);
   }
 }
 
+watch(
+  filters.value,
+  () => {
+    store.resetProducts();
+    const params = store.getActiveFilters();
+    store.getProducts(params);
+  },
+  { deep: true }
+);
+
 onBeforeMount(() => {
-  if (!store.products.length) store.getProducts();
+  if (!store.products.length) {
+    const params = store.getActiveFilters();
+    store.getProducts(params);
+  }
   window.addEventListener("scroll", onScroll);
 });
 
@@ -57,31 +73,93 @@ onBeforeUnmount(() => {
     </div>
 
     <main class="main">
-      <h1 class="title">Краски</h1>
-      <div @click="toggleBottomModal">Фильтры</div>
-      <ProductList
-        v-if="store.products"
-        :products="store.products"
-        class="product-list"
-      />
+      <section class="section">
+        <aside class="sidebar">
+          <ProductFilters :filters="filters" class="filters" />
+        </aside>
+
+        <div>
+          <h1 class="title">Краски</h1>
+          <div class="products-buttons">
+            <div
+              @click="toggleBottomModal"
+              class="products-buttons__filters-btn"
+            >
+              Фильтры
+            </div>
+
+            <div class="products-buttons__sort-btn">Сначала дорогие</div>
+          </div>
+          <ProductList
+            v-if="store.products"
+            :products="store.products"
+            class="product-list"
+          />
+        </div>
+      </section>
+
       <ModalBottomSheet
         :class="{ modal_active: isBottomModalOpen }"
         @close="toggleBottomModal"
       >
-        Filters
+        <template #default>
+          <ProductFilters :filters="filters" />
+        </template>
       </ModalBottomSheet>
     </main>
   </div>
 </template>
 
 <style scoped lang="scss">
-.product-list {
-  margin-top: 24px;
+.section {
+  display: block;
+  width: 100%;
+  padding-top: 28px;
+  max-width: 1920px;
+  margin: 0 auto;
+
+  @media screen and (min-width: 992px) {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 52px;
+  }
+}
+
+.sidebar {
+  position: relative;
+  display: none;
+  padding-right: 20px;
+
+  @media screen and (min-width: 992px) {
+    display: block;
+  }
+
+  .filters {
+    position: sticky;
+    top: 20px;
+  }
+}
+
+.products-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+
+  @media screen and (min-width: 992px) {
+    margin-bottom: 44px;
+    justify-content: flex-end;
+  }
+
+  &__filters-btn {
+    display: block;
+
+    @media screen and (min-width: 992px) {
+      display: none;
+    }
+  }
 }
 
 h1.title {
-  margin-top: 28px;
-
   @media screen and (min-width: 992px) {
     display: none;
   }

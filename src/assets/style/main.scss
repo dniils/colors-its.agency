@@ -1,4 +1,4 @@
-@import "variables", "typography", "vueperslides";
+@import "variables", "vueperslides";
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -33,4 +33,13 @@ a {
   &:hover {
     color: var(--black-200);
   }
+}
+
+main.main {
+  padding: 20px 24px;
+}
+
+h1 {
+  font-weight: 400;
+  margin-bottom: 48px;
 }

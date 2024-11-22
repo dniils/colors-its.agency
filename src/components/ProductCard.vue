@@ -47,13 +47,9 @@ function addItemToCart(product: Product) {
   gap: 16px;
   position: relative;
   background-color: var(--white);
-  max-width: 156px;
   height: 100%;
   color: var(--black-100);
 
-  @media screen and (min-width: 1200px) {
-    max-width: 278px;
-  }
   @media screen and (pointer: fine) {
     &:hover {
       .product__btn-add {
@@ -73,14 +69,6 @@ function addItemToCart(product: Product) {
 
     @media screen and (min-width: 768px) {
       bottom: -20px;
-    }
-  }
-
-  &__image-wrapper {
-    height: 156px;
-
-    @media screen and (min-width: 1200px) {
-      height: 278px;
     }
   }
 

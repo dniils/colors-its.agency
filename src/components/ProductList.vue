@@ -22,17 +22,24 @@ defineProps<{
   row-gap: 24px;
   column-gap: 16px;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 576px) {
     grid-template-columns: repeat(3, 1fr);
+    row-gap: 40px;
+  }
+  @media screen and (min-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
     row-gap: 40px;
   }
   @media screen and (min-width: 992px) {
     grid-template-columns: repeat(4, 1fr);
   }
   @media screen and (min-width: 1024px) {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
   @media screen and (min-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media screen and (min-width: 1600px) {
     grid-template-columns: repeat(5, 1fr);
   }
 }

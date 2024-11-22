@@ -10,9 +10,3 @@ import AppHeader from "../components/AppHeader.vue";
     </main>
   </div>
 </template>
-
-<style lang="scss">
-.main {
-  padding: 20px 24px;
-}
-</style>
