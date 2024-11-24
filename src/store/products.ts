@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { Product } from "../types/Product";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { fetchProducts } from "../api";
 import { Params } from "../types/Params";
 
@@ -16,6 +16,27 @@ export const useProductsStore = defineStore("products", () => {
     contract: { name: "Контрактные", isActive: false },
     exclusive: { name: "Эксклюзивные", isActive: false },
     sale: { name: "Распродажа", isActive: false },
+  });
+  const sortOptions = [
+    { label: "Сначала дорогие", sortBy: "price", order: "desc" },
+    { label: "Сначала недорогие", sortBy: "price", order: "asc" },
+    { label: "Сначала популярные", sortBy: "popularity", order: "desc" },
+    { label: "Сначала новые", sortBy: "new", order: "desc" },
+  ];
+
+  const selectedSortOption = ref(sortOptions[2]);
+
+  function getSelectedSortOption(selectedOption: string) {
+    selectedSortOption.value = selectedSortOption.value =
+      sortOptions.find((option) => option.label === selectedOption) ||
+      sortOptions[0];
+  }
+
+  const sortOptionParam = computed(() => {
+    return {
+      sortBy: selectedSortOption.value.sortBy,
+      order: selectedSortOption.value.order,
+    };
   });
 
   function getActiveFilters() {
@@ -59,8 +80,12 @@ export const useProductsStore = defineStore("products", () => {
     productsPerPage,
     products,
     filters,
+    sortOptions,
+    selectedSortOption,
+    sortOptionParam,
     getProducts,
     resetProducts,
     getActiveFilters,
+    getSelectedSortOption,
   };
 });

@@ -9,36 +9,44 @@ import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
 import { slides } from "../slides/index.ts";
 import ProductFilters from "../components/ProductFilters.vue";
+import AppSelect from "../components/AppSelect.vue";
 
 const isBottomModalOpen = ref(false);
 const store = useProductsStore();
-const filters = ref(store.filters);
 
 function toggleBottomModal(): void {
   isBottomModalOpen.value = !isBottomModalOpen.value;
 }
 
+function buildProductQuery() {
+  const filterParams = store.getActiveFilters();
+  const sortParams = store.sortOptionParam;
+  const params = { ...filterParams, ...sortParams };
+  return params;
+}
+
 async function onScroll(): Promise<void> {
   if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-    const params = store.getActiveFilters();
-    await store.getProducts(params);
+    await store.getProducts(buildProductQuery());
   }
 }
 
 watch(
-  filters.value,
+  () => store.selectedSortOption,
   () => {
     store.resetProducts();
-    const params = store.getActiveFilters();
-    store.getProducts(params);
-  },
-  { deep: true }
+    store.getProducts(buildProductQuery());
+  }
 );
+
+watch(store.filters, () => {
+  store.resetProducts();
+  store.getProducts(buildProductQuery());
+});
 
 onBeforeMount(() => {
   if (!store.products.length) {
-    const params = store.getActiveFilters();
-    store.getProducts(params);
+    store.getProducts(buildProductQuery());
   }
   window.addEventListener("scroll", onScroll);
 });
@@ -75,7 +83,7 @@ onBeforeUnmount(() => {
     <main class="main">
       <section class="section">
         <aside class="sidebar">
-          <ProductFilters :filters="filters" class="filters" />
+          <ProductFilters :filters="store.filters" class="filters" />
         </aside>
 
         <div>
@@ -88,7 +96,11 @@ onBeforeUnmount(() => {
               Фильтры
             </div>
 
-            <div class="products-buttons__sort-btn">Сначала дорогие</div>
+            <AppSelect
+              :options="store.sortOptions.map((el) => el.label)"
+              :selected-option="store.selectedSortOption.label"
+              @select="store.getSelectedSortOption"
+            />
           </div>
           <ProductList
             v-if="store.products"
@@ -103,7 +115,7 @@ onBeforeUnmount(() => {
         @close="toggleBottomModal"
       >
         <template #default>
-          <ProductFilters :filters="filters" />
+          <ProductFilters :filters="store.filters" />
         </template>
       </ModalBottomSheet>
     </main>
@@ -144,6 +156,9 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: space-between;
   margin-bottom: 24px;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 500;
 
   @media screen and (min-width: 992px) {
     margin-bottom: 44px;

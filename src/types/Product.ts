@@ -8,4 +8,5 @@ export interface Product {
   contract: boolean;
   exclusive: boolean;
   sale: boolean;
+  popularity: number;
 }
