@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppHeader from "../components/AppHeader.vue";
 import ProductList from "../components/ProductList.vue";
 import BreadCrumbs from "../components/BreadCrumbs.vue";
 import ModalBottomSheet from "../components/ModalBottomSheet.vue";
@@ -38,8 +37,6 @@ onBeforeUnmount(() => {
 
 <template>
   <div>
-    <AppHeader class="header" />
-
     <div class="slider-wrapper">
       <vueper-slides
         class="no-shadow"
