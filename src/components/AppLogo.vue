@@ -1,6 +1,6 @@
 <template>
   <span class="logo">
-    <router-link to="/"> COLORS </router-link>
+    <router-link to="/" class="logo__link"> COLORS </router-link>
   </span>
 </template>
 
@@ -10,7 +10,7 @@
   display: inline-block;
   line-height: 1;
 
-  a {
+  &__link {
     text-decoration: none;
     font-size: 22px;
     font-weight: 500;
