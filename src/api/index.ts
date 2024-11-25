@@ -1,14 +1,13 @@
+import { API_PATH } from "../constants";
 import { Params } from "../types/Params";
 import { Product } from "../types/Product";
-
-const PROJECT_TOKEN = import.meta.env.VITE_PROJECT_TOKEN;
 
 export async function fetchProducts(
   page: string,
   limit: string,
   params?: Params
 ): Promise<Product[]> {
-  const url = new URL(`https://${PROJECT_TOKEN}.mockapi.io/products`);
+  const url = new URL(API_PATH);
   url.searchParams.append("page", page);
   url.searchParams.append("limit", limit);
 
