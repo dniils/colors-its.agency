@@ -1,12 +1,18 @@
 <script setup lang="ts">
+import { computed } from "vue";
+
 const props = defineProps<{
   filter: { name: string; isActive: boolean };
 }>();
+
+const classes = computed(() => ({
+  toggle_active: props.filter.isActive,
+}));
 </script>
 
 <template>
   <label class="toggle-wrapper">
-    <div class="toggle" :class="{ toggle_active: props.filter.isActive }">
+    <div class="toggle" :class="classes">
       <input
         type="checkbox"
         v-model="props.filter.isActive"
