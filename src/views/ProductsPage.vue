@@ -9,7 +9,7 @@ import BreadCrumbs from "../components/BreadCrumbs.vue";
       <h1 class="title">Products:</h1>
       <ul>
         <li>
-          <router-link to="/products/paints"> Paints </router-link>
+          <RouterLink to="/products/paints"> Paints </RouterLink>
         </li>
       </ul>
     </main>

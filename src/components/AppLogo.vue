@@ -1,6 +1,6 @@
 <template>
   <span class="logo">
-    <router-link to="/" class="logo__link"> COLORS </router-link>
+    <RouterLink to="/" class="logo__link"> COLORS </RouterLink>
   </span>
 </template>
 

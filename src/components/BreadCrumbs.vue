@@ -22,9 +22,9 @@ const breadcrumbs = computed(() => {
       v-for="(crumb, index) in breadcrumbs"
       :key="crumb.name"
     >
-      <router-link v-if="index !== breadcrumbs.length - 1" :to="crumb.path">{{
+      <RouterLink v-if="index !== breadcrumbs.length - 1" :to="crumb.path">{{
         crumb.name
-      }}</router-link>
+      }}</RouterLink>
       <span v-else> {{ crumb.name }}</span>
     </li>
   </ul>

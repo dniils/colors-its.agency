@@ -38,7 +38,7 @@ onBeforeUnmount(() => {
 <template>
   <div>
     <div class="slider-wrapper">
-      <vueper-slides
+      <VueperSlides
         class="no-shadow"
         :dragging-distance="70"
         prevent-y-scroll
@@ -46,14 +46,14 @@ onBeforeUnmount(() => {
         no-shadow
         fixed-height="560px"
       >
-        <vueper-slide
+        <VueperSlide
           v-for="(slide, i) in slides"
           :key="i"
           :title="slide.title"
           :content="slide.content"
           :image="slide.image"
         />
-      </vueper-slides>
+      </VueperSlides>
       <BreadCrumbs class="breadcrumbs" />
     </div>
 

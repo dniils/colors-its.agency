@@ -1,22 +1,20 @@
-<script setup lang="ts"></script>
-
 <template>
   <nav class="menu">
     <ul class="menu__list">
       <li class="menu__item">
-        <router-link to="/products"> Продукты </router-link>
+        <RouterLink to="/products"> Продукты </RouterLink>
       </li>
       <li class="menu__item">
-        <router-link to="/"> Цвета </router-link>
+        <RouterLink to="/"> Цвета </RouterLink>
       </li>
       <li class="menu__item">
-        <router-link to="/"> Вдохновение </router-link>
+        <RouterLink to="/"> Вдохновение </RouterLink>
       </li>
       <li class="menu__item">
-        <router-link to="/"> Советы </router-link>
+        <RouterLink to="/"> Советы </RouterLink>
       </li>
       <li class="menu__item">
-        <router-link to="/"> Найти магазин </router-link>
+        <RouterLink to="/"> Найти магазин </RouterLink>
       </li>
     </ul>
   </nav>
