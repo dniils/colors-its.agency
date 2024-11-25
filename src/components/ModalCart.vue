@@ -4,13 +4,10 @@ import AppButton from "./AppButton.vue";
 import { useCartStore } from "../store/cart";
 
 const store = useCartStore();
-const emit = defineEmits<{
+
+defineEmits<{
   closeCart: [];
 }>();
-
-function closeCart() {
-  emit("closeCart");
-}
 
 function clearCart(): void {
   store.clearCart();
@@ -20,7 +17,7 @@ function clearCart(): void {
 <template>
   <div class="cart">
     <div>
-      <button class="cart__btn-close" @click="closeCart">X</button>
+      <button class="cart__btn-close" @click="$emit('closeCart')">X</button>
       <h1 class="title cart__title">Корзина</h1>
       <div class="cart__info">
         <!-- TODO: товар-[]/-а/-ов -->

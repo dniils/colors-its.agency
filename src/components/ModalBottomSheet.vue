@@ -1,16 +1,12 @@
 <script setup lang="ts">
-const emit = defineEmits<{
+defineEmits<{
   close: [];
 }>();
-
-function handleOverlayClick(): void {
-  emit("close");
-}
 </script>
 
 <template>
   <div class="modal">
-    <div class="modal__overlay" @click="handleOverlayClick"></div>
+    <div class="modal__overlay" @click="$emit('close')"></div>
     <div class="modal__bottom-sheet">
       <slot></slot>
     </div>
