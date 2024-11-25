@@ -7,7 +7,7 @@ import { onBeforeMount, onBeforeUnmount, ref } from "vue";
 import { useProductsStore } from "../store/products";
 import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
-import { slides } from "../slides/index.ts";
+import { slides } from "../assets/slides/index.ts";
 import ProductFilters from "../components/ProductFilters.vue";
 import AppSelect from "../components/AppSelect.vue";
 
