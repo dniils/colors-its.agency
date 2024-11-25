@@ -1,8 +1,6 @@
 <template>
   <button class="burger-btn">
-    <div class="burger-btn__line"></div>
-    <div class="burger-btn__line"></div>
-    <div class="burger-btn__line"></div>
+    <div class="burger-btn__line" v-for="i in 3" :key="i"></div>
   </button>
 </template>
 
