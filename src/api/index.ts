@@ -1,7 +1,7 @@
 import { Params } from "../types/Params";
 import { Product } from "../types/Product";
 
-const PROJECT_TOKEN = "67366c19aafa2ef222307c16";
+const PROJECT_TOKEN = import.meta.env.VITE_PROJECT_TOKEN;
 
 export async function fetchProducts(
   page: string,
