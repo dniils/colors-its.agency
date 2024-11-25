@@ -104,6 +104,7 @@ onBeforeUnmount(() => {
   width: 100%;
   padding-top: 28px;
   max-width: 1920px;
+  min-height: 100vh;
   margin: 0 auto;
 
   @media screen and (min-width: 992px) {
@@ -117,6 +118,7 @@ onBeforeUnmount(() => {
   position: relative;
   display: none;
   padding-right: 20px;
+  flex-shrink: 0;
 
   @media screen and (min-width: 992px) {
     display: block;
