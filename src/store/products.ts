@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { Product } from "../types/Product";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { fetchProducts } from "../api";
 import { Params } from "../types/Params";
 
@@ -18,37 +18,36 @@ export const useProductsStore = defineStore("products", () => {
     sale: { name: "Распродажа", isActive: false },
   });
   const sortOptions = [
-    { label: "Сначала дорогие", sortBy: "price", order: "desc" },
-    { label: "Сначала недорогие", sortBy: "price", order: "asc" },
-    { label: "Сначала популярные", sortBy: "popularity", order: "desc" },
-    { label: "Сначала новые", sortBy: "new", order: "desc" },
+    { id: 0, label: "Сначала дорогие", sortBy: "price", order: "desc" },
+    { id: 1, label: "Сначала недорогие", sortBy: "price", order: "asc" },
+    { id: 2, label: "Сначала популярные", sortBy: "popularity", order: "desc" },
+    { id: 3, label: "Сначала новые", sortBy: "new", order: "desc" },
   ];
 
   const selectedSortOption = ref(sortOptions[2]);
 
-  function getSelectedSortOption(selectedOption: string) {
-    selectedSortOption.value = selectedSortOption.value =
-      sortOptions.find((option) => option.label === selectedOption) ||
-      sortOptions[0];
-  }
-
-  const sortOptionParam = computed(() => {
+  const sortOptionQuery = computed(() => {
     return {
       sortBy: selectedSortOption.value.sortBy,
       order: selectedSortOption.value.order,
     };
   });
-
-  function getActiveFilters() {
+  const filtersQuery = computed(() => {
     return Object.entries(filters.value).reduce((acc, [key, value]) => {
       if (value.isActive) acc[key] = value.isActive;
       return acc;
-    }, {} as Record<string, boolean>);
-  }
+    }, {} as Params);
+  });
 
-  async function getProducts(params?: Params): Promise<void> {
+  const productQuery = computed(() => {
+    return { ...filtersQuery.value, ...sortOptionQuery.value };
+  });
+
+  async function getProducts(): Promise<void> {
     if (loading.value || !hasMoreProducts.value) return;
     loading.value = true;
+
+    const params = productQuery.value;
 
     try {
       const data = await fetchProducts(
@@ -75,6 +74,19 @@ export const useProductsStore = defineStore("products", () => {
     hasMoreProducts.value = true;
   }
 
+  watch(
+    () => selectedSortOption.value,
+    () => {
+      resetProducts();
+      getProducts();
+    }
+  );
+
+  watch(filters.value, () => {
+    resetProducts();
+    getProducts();
+  });
+
   return {
     page,
     productsPerPage,
@@ -82,10 +94,7 @@ export const useProductsStore = defineStore("products", () => {
     filters,
     sortOptions,
     selectedSortOption,
-    sortOptionParam,
     getProducts,
     resetProducts,
-    getActiveFilters,
-    getSelectedSortOption,
   };
 });

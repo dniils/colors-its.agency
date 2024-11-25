@@ -1,23 +1,25 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { SelectOption } from "../types/Params";
 
-const props = defineProps<{
-  options: string[];
-  selectedOption: string;
+defineProps<{
+  options: SelectOption[];
+  modelValue: SelectOption;
 }>();
-const emit = defineEmits(["select"]);
+
+const emit = defineEmits<{
+  (e: "update:model-value", value: SelectOption): void;
+}>();
 
 const selectActive = ref(false);
-const selectedOption = ref(props.selectedOption);
 
 function toggleOptions(): void {
   selectActive.value = !selectActive.value;
 }
 
-function handleOptionSelect(optionLabel: string): void {
-  selectedOption.value = optionLabel;
+function handleOptionSelect(option: SelectOption): void {
   toggleOptions();
-  emit("select", selectedOption.value);
+  emit("update:model-value", option);
 }
 </script>
 
@@ -25,17 +27,17 @@ function handleOptionSelect(optionLabel: string): void {
   <div class="select" :class="{ select_active: selectActive }">
     <div class="select__overlay" @click="toggleOptions"></div>
     <div class="select__selected" @click="toggleOptions">
-      {{ selectedOption }}
+      {{ modelValue.label }}
     </div>
     <ul class="select__options">
       <li
         class="select__option"
-        :class="{ select__option_selected: selectedOption === option }"
-        v-for="(option, i) in options"
-        :key="i"
+        :class="{ select__option_selected: modelValue.id === option.id }"
+        v-for="option in options"
+        :key="option.id"
         @click="handleOptionSelect(option)"
       >
-        {{ option }}
+        {{ option.label }}
       </li>
     </ul>
   </div>

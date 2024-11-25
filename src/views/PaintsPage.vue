@@ -3,7 +3,7 @@ import AppHeader from "../components/AppHeader.vue";
 import ProductList from "../components/ProductList.vue";
 import BreadCrumbs from "../components/BreadCrumbs.vue";
 import ModalBottomSheet from "../components/ModalBottomSheet.vue";
-import { onBeforeMount, onBeforeUnmount, ref, watch } from "vue";
+import { onBeforeMount, onBeforeUnmount, ref } from "vue";
 import { useProductsStore } from "../store/products";
 import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
@@ -18,35 +18,15 @@ function toggleBottomModal(): void {
   isBottomModalOpen.value = !isBottomModalOpen.value;
 }
 
-function buildProductQuery() {
-  const filterParams = store.getActiveFilters();
-  const sortParams = store.sortOptionParam;
-  const params = { ...filterParams, ...sortParams };
-  return params;
-}
-
 async function onScroll(): Promise<void> {
   if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-    await store.getProducts(buildProductQuery());
+    await store.getProducts();
   }
 }
-
-watch(
-  () => store.selectedSortOption,
-  () => {
-    store.resetProducts();
-    store.getProducts(buildProductQuery());
-  }
-);
-
-watch(store.filters, () => {
-  store.resetProducts();
-  store.getProducts(buildProductQuery());
-});
 
 onBeforeMount(() => {
   if (!store.products.length) {
-    store.getProducts(buildProductQuery());
+    store.getProducts();
   }
   window.addEventListener("scroll", onScroll);
 });
@@ -97,9 +77,8 @@ onBeforeUnmount(() => {
             </div>
 
             <AppSelect
-              :options="store.sortOptions.map((el) => el.label)"
-              :selected-option="store.selectedSortOption.label"
-              @select="store.getSelectedSortOption"
+              :options="store.sortOptions"
+              v-model="store.selectedSortOption"
             />
           </div>
           <ProductList
