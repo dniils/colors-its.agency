@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppToggle from "./AppToggle.vue";
+import AppToggle from "./ui/AppToggle.vue";
 
 defineProps<{
   filters: Record<string, { name: string; isActive: boolean }>;

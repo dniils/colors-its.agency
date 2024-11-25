@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import ProductList from "../components/ProductList.vue";
-import BreadCrumbs from "../components/BreadCrumbs.vue";
-import ModalBottomSheet from "../components/ModalBottomSheet.vue";
+import BreadCrumbs from "../components/ui/BreadCrumbs.vue";
+import ModalBottomSheet from "../components/ui/ModalBottomSheet.vue";
 import { onBeforeMount, onBeforeUnmount, ref } from "vue";
 import { useProductsStore } from "../store/products";
 import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
 import { slides } from "../assets/slides/index.ts";
 import ProductFilters from "../components/ProductFilters.vue";
-import AppSelect from "../components/AppSelect.vue";
+import AppSelect from "../components/ui/AppSelect.vue";
 
 const isBottomModalOpen = ref(false);
 const store = useProductsStore();

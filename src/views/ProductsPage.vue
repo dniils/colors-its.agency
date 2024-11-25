@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BreadCrumbs from "../components/BreadCrumbs.vue";
+import BreadCrumbs from "../components/ui/BreadCrumbs.vue";
 </script>
 
 <template>

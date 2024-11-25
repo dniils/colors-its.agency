@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import AppLogo from "./AppLogo.vue";
+import AppLogo from "./ui/AppLogo.vue";
 import AppMenu from "./AppMenu.vue";
-import BurgerButton from "./BurgerButton.vue";
+import BurgerButton from "./ui/BurgerButton.vue";
 import ModalCart from "./ModalCart.vue";
 import { useCartStore } from "../store/cart";
 
