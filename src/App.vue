@@ -8,5 +8,3 @@ import AppHeader from "./components/AppHeader.vue";
     <RouterView />
   </div>
 </template>
-
-<style scoped lang="scss"></style>
