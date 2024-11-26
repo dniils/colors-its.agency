@@ -48,7 +48,8 @@ function handleOptionSelect(option: SelectOption): void {
   position: relative;
   cursor: pointer;
   text-wrap: nowrap;
-  z-index: 2;
+  z-index: 1;
+  transition: z-index 0.15s step-end;
 
   &__options {
     background: var(--white);
@@ -71,6 +72,9 @@ function handleOptionSelect(option: SelectOption): void {
   }
 
   &_active {
+    z-index: 2;
+    transition: z-index 0.15s step-start;
+
     .select__options {
       display: flex;
     }
@@ -78,6 +82,7 @@ function handleOptionSelect(option: SelectOption): void {
     .select__overlay {
       opacity: 1;
       pointer-events: auto;
+      transition: opacity 0.15s ease-in;
     }
   }
 
@@ -90,7 +95,7 @@ function handleOptionSelect(option: SelectOption): void {
     background-color: #00000096;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.15s ease-in;
+    transition: z-index 0.15s step-end, opacity 0.15s ease-in;
   }
 }
 </style>
