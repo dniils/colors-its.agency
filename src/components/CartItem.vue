@@ -78,7 +78,11 @@ function increaseQuantity(id: string): void {
 
   &__buttons {
     display: flex;
-    gap: 20px;
+    gap: 8px;
+
+    @media screen and (min-width: 768px) {
+      gap: 20px;
+    }
   }
 }
 </style>

@@ -105,6 +105,10 @@ function addItemToCart(product: Product) {
     right: 0;
     font-weight: 600;
 
+    @media screen and (min-width: 992px) {
+      padding: 6px 30px;
+    }
+
     @media screen and (min-width: 992px) and (pointer: fine) {
       display: none;
     }

@@ -36,7 +36,9 @@ function clearCart(): void {
         <div>Итого</div>
         <div class="cart__price-total">{{ store.total }} ₽</div>
       </div>
-      <AppButton>оформить заказ</AppButton>
+      <AppButton class="cart__checkout-btn" :disabled="!store.cartCount"
+        >оформить заказ</AppButton
+      >
     </div>
   </div>
 </template>
@@ -50,19 +52,27 @@ function clearCart(): void {
   max-width: 600px;
   height: 100vh;
   background-color: var(--white);
-  padding: 32px 40px 40px;
+  padding: 32px 20px 20px;
   overflow: auto;
+
+  @media screen and (min-width: 768px) {
+    padding: 32px 40px 40px;
+  }
 
   &__btn-close {
     position: absolute;
     top: 32px;
-    right: 40px;
+    right: 20px;
     width: 48px;
     height: 48px;
     background-color: var(--white);
     border: 1px solid var(--gray-100);
     border-radius: 50%;
     cursor: pointer;
+
+    @media screen and (min-width: 768px) {
+      right: 40px;
+    }
   }
 
   &__title {
@@ -85,6 +95,22 @@ function clearCart(): void {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  &__checkout-btn {
+    padding: 12px 20px;
+
+    @media screen and (min-width: 768px) {
+      padding: 20px 58px;
+    }
+
+    &:enabled {
+      background-color: var(--green-100);
+    }
+
+    &:enabled:hover {
+      background-color: var(--gray-200);
+    }
   }
 
   &__info {
